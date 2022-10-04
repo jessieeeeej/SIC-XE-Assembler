@@ -1,0 +1,32 @@
+程式作業2：
+Cross Assembler實作說明文件
+資訊三甲 10827139 黃云潔
+
+•開發平台：
+•OS : Windows11
+•CPU：Intel® Core™ i5-8265U
+•RAM : 8GB
+•使用開發環境：Visual Studio Code 1.61
+•使用的程式語言：Python
+•所選擇的組合語言：SIC/XE
+•說明你的程式設計：
+	1. 使用說明：請先放入裝有Table1~4.table的SIC_table資料夾及LexucalAnalysis的程式於與程式相同目錄下。
+	   	先選擇要使用SIC還是SICXE，再輸入欲讀入的檔案全名(要加.txt)，最後輸出 ”out_” + 檔案全名。
+ 
+	2. 功能：輸入一個檔案，讀檔方式為一次讀一個字元，直到讀到換行\n就把整個字串放在vector中等待切token。
+	   	切token一整行讀進來，如果讀到空白或tab，判斷他是屬於哪一種table。將Table type及存放位址印出
+		後，開始將程式轉為機器碼。此次作業為分析與語法是否正確後，將程式碼轉為機器看得懂的機器碼。
+
+	3. 流程：(1)將每一行敘述進行文法分析，分為三大群symbol、instruction、operand
+		 (2)根據instruction的固定格式判斷operand是否符合格式
+		 (3)再判斷symbol後是不是接著正確的instruction和operand格式，若錯誤則輸出syntax error
+		 (4)接著一行一行開始進行pass1，instruction可能是表中固定的指令，或是pseudo instruction，根據指令決定程式Location及opcode
+		 (5)若是SICXE則需根據講義上4個format指定格式將程式碼轉為機器碼
+		 (6)遇到symbol時，將該symbol及宣告位址存入symbol table，pass1判斷是否有重複定義之symbol，pass2判斷是否有未定義的symbol
+		 (7)根據指令內容決定定址模式，operand有#為立即定址，symbol為直接定址，@為間接定址，,X為Indexed定址
+		 (8)做完pass1後，pass2進行forward reference，將前面尚未被定義的symbol之位址依照format方式填入機器碼中，完成後寫入檔案
+
+	4. 使用的data structure：將SIC和SICXE分為兩個不同的class，因為所使用的pseudo instruction和暫存器都有些不同。並將symbol、opcode、instruction table
+		以dictionary方式儲存，方便搜尋。
+
+•未完成的功能：無
